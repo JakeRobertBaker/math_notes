@@ -36,11 +36,11 @@
 % Cols of X_1 not o.n to X_0
 \draw[thin,-stealth, teal] (0,0,0) -- (\linemax,\limy,0) node[above] {$X_{1,:}$};
 % show the two components of the full model
-\draw[thin,-stealth, blue] (0,0,0) -- (\xonex,\yp,0) node[below, pos=0.8] {$X_1 \hat{\beta}_{\mathcal{F} 1}^T$};
-\draw[thin,-stealth, blue] (\xonex,\yp,0) -- (\xp,\yp,0) node[below, pos=0.5] {$X_0 \hat{\beta}_{\mathcal{F} 0}^T$};
+\draw[thin,-stealth, blue] (0,0,0) -- (\xonex,\yp,0) node[below, pos=0.8] {$X_1 \hat{\beta}_{\mathcal{F} 1}$};
+\draw[thin,-stealth, blue] (\xonex,\yp,0) -- (\xp,\yp,0) node[below, pos=0.5] {$X_0 \hat{\beta}_{\mathcal{F} 0}$};
 
 % show the null model
-\draw[thin,-stealth, purple] (0,0,0) -- (\xp,0,0) node[below, pos=0.5] {$X_1 \hat{\beta}_\mathcal{N}^T$};
+\draw[thin,-stealth, purple] (0,0,0) -- (\xp,0,0) node[below, pos=0.5] {$X_1 \hat{\beta}_\mathcal{N}$};
 
 % Point above the plane
 \coordinate (Y) at (\xp,\yp,\zp); % Use defined coordinates
@@ -49,23 +49,23 @@
 % Epsions
 % full epsilon
 \draw[thick,-stealth,red] (\xp,\yp,0) -- (Y) node[right, pos=0.4] {
-    \small $\hat{\mathcal{E}}_\mathcal{F}$
+     $\hat{\mathbf{\varepsilon}}_\mathcal{F}$
     };
 % null epsilon
 \draw[thin,-stealth, red] (\xp,0,00) -- (\xp,\yp,\zp) node[left, pos=0.5] {
-    \small $\hat{\mathcal{E}}_\mathcal{N}$
+     $\hat{\mathbf{\varepsilon}}_\mathcal{N}$
     };
 % difference
 \draw[very thin,-stealth, red] (\xp,0,00) -- (\xp,\yp,0) node[right, pos=0.25] {
-    \small $\hat{\mathcal{E}}_\mathcal{N} - \hat{\mathcal{E}}_\mathcal{F}$
+     $\hat{\mathbf{\varepsilon}}_\mathcal{N} - \hat{\mathbf{\varepsilon}}_\mathcal{F}$
     };
 
 % Projection on the plane 
-\filldraw[blue] (\xp,\yp,0) circle (1pt) node[right] {$X \hat{\beta}_\mathcal{F}^T$};
+\filldraw[blue] (\xp,\yp,0) circle (1pt) node[right] {$X \hat{\beta}_\mathcal{F}$};
 % residual for current method
 \draw[very thin, opacity=0.3] (\xonex,\yp,0) -- (\xonex,\yp,\zp) node[above, pos=1] {};
 
-\filldraw[black] (\xonex,\yp,\zp) circle (1pt) node[anchor=south] {$y-X_0 {\beta_\mathcal{F}}_0^T$};
+\filldraw[black] (\xonex,\yp,\zp) circle (1pt) node[anchor=south] {$y-X_0 \hat{\beta}_{\mathcal{F} 0}$};
 
 \draw[very thin, opacity=0.3] (\xonex,\yp,\zp) -- (\xp,\yp,\zp);
 
