@@ -8,3 +8,4 @@
 # Ignore Quarto Tutorial
 /quarto/
 *_files/
+/.luarc.json

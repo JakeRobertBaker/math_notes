@@ -6,11 +6,15 @@ number-sections: true
 highlight-style: pygments
 format: 
   html: 
-    code-fold: true
     html-math-method: katex
+filters:
+  - ../../_extensions/pandoc-ext/diagram/diagram.lua
+
+diagram:
+  cache: false
 ---
 
-## Basic Seup
+## OLS Basics
 
 ::: {#def-standard_normal}
 A random vector $\mathbf{z} \in \mathbb{R^n}$ is standard normal **iff** components 
@@ -47,8 +51,8 @@ Assume that $\mathbf{X}$ has full rank.
 The solution of OLS is given by $\hat{\beta} = \mathbf{(X^TX)^{-1}X^Ty}$.
 :::
 
-::: {.proof}
 
+::: {.proof}
 Let subspace $\mathbf{U} \leq \mathbb{R^n}$ generated via the span of $\mathbf{X}$ columns. Then by property of orthogonal projection the 
 $\mathbf{\hat{y}=X \beta \in U}$
 that minimises 
@@ -70,20 +74,50 @@ $$
 \mathbf{\hat{\beta}} = \mathbf{(X^TX)^{-1}X^Ty}
 \end{align*}
 $$
-
 :::
 
 
-## Theorems
+## Large Model vs Submodel
 
-::: {#thm-line}
-## Aline
-The equation of any straight line, called a linear equation, can be written as:
+::: {#thm-anova_F_test}
+## ANOVA F-test
+Let $p=p_0+p_1, \mathbf{X = [X_0, X_1]} \in \mathbb{R}^{n \times p}$ for 
+$\mathbf{X_0} \in \mathbb{R}^{n \times p_0}, \mathbf{X_1} \in \mathbb{R}^{n \times p_1}$
+
+Consider the following two hypothesis of a full model vs a submodel,
+
 $$
-y = mx + b
+\begin{align*}
+\textbf{H}_0 \text{ (null)}&:
+\mathbf{y = X_0 \beta_\mathcal{N} + \varepsilon},
+\quad
+&& \mathbf{\beta}_\mathcal{N} \in \mathbb{R}^{p_0 \times 1},
+\quad
+&&&\mathbf{\varepsilon \sim \mathcal{N}(0,I_n)}
+\\
+\textbf{H}_1 \text{ (full)}&:
+\mathbf{y = X \beta_\mathcal{F} + \varepsilon},
+\quad
+&& \mathbf{\beta}_\mathcal{F} \in \mathbb{R}^{p \times 1},
+\quad
+&&&\mathbf{\varepsilon \sim \mathcal{N}(0,I_n)}
+\end{align*}
 $$
+
+Under the null hypothesis the following statistic is F distributed.
+$$
+\dfrac{\| \mathbf{\hat{\varepsilon}_\mathcal{N} - \hat{\varepsilon}_\mathcal{F}} \| /p_1}{\| \mathbf{\hat{\varepsilon}} \|/(n-p)}
+\sim
+F_{p_1, n-p}
+$$
+:::
+
+
+::: {.proof}
+The following picture is helpful:
 :::
 
 ## Section
+
 Example reference.
-See @thm-line.
+See @thm-anova_F_test.

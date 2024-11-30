@@ -89,8 +89,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#basic-seup" id="toc-basic-seup" class="nav-link active" data-scroll-target="#basic-seup"><span class="header-section-number">1</span> Basic Seup</a></li>
-  <li><a href="#theorems" id="toc-theorems" class="nav-link" data-scroll-target="#theorems"><span class="header-section-number">2</span> Theorems</a></li>
+  <li><a href="#ols-basics" id="toc-ols-basics" class="nav-link active" data-scroll-target="#ols-basics"><span class="header-section-number">1</span> OLS Basics</a></li>
+  <li><a href="#large-model-vs-submodel" id="toc-large-model-vs-submodel" class="nav-link" data-scroll-target="#large-model-vs-submodel"><span class="header-section-number">2</span> Large Model vs Submodel</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3</span> Section</a></li>
   </ul>
 </nav>
@@ -122,8 +122,8 @@ window.Quarto = {
 </header>
 
 
-<section id="basic-seup" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="basic-seup"><span class="header-section-number">1</span> Basic Seup</h2>
+<section id="ols-basics" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ols-basics"><span class="header-section-number">1</span> OLS Basics</h2>
 <div id="def-standard_normal" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1</strong></span> A random vector <span class="math inline">\mathbf{z} \in \mathbb{R^n}</span> is standard normal <strong>iff</strong> components <span class="math inline">(\mathbf{z_i})_{i=1}^n</span> are independantly identically distributed <span class="math inline">\mathcal{N}(\mathbf{0,I_n})</span>.</p>
 </div>
@@ -172,17 +172,41 @@ Note
 </span></p>
 </div>
 </section>
-<section id="theorems" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="theorems"><span class="header-section-number">2</span> Theorems</h2>
-<div id="thm-line" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2 (Aline)</strong></span> The equation of any straight line, called a linear equation, can be written as: <span class="math display">
-y = mx + b
+<section id="large-model-vs-submodel" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="large-model-vs-submodel"><span class="header-section-number">2</span> Large Model vs Submodel</h2>
+<div id="thm-anova_F_test" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (ANOVA F-test)</strong></span> Let <span class="math inline">p=p_0+p_1, \mathbf{X = [X_0, X_1]} \in \mathbb{R}^{n \times p}</span> for <span class="math inline">\mathbf{X_0} \in \mathbb{R}^{n \times p_0}, \mathbf{X_1} \in \mathbb{R}^{n \times p_1}</span></p>
+<p>Consider the following two hypothesis of a full model vs a submodel,</p>
+<p><span class="math display">
+\begin{align*}
+\textbf{H}_0 \text{ (null)}&amp;:
+\mathbf{y = X_0 \beta_\mathcal{N} + \varepsilon},
+\quad
+&amp;&amp; \mathbf{\beta}_\mathcal{N} \in \mathbb{R}^{p_0 \times 1},
+\quad
+&amp;&amp;&amp;\mathbf{\varepsilon \sim \mathcal{N}(0,I_n)}
+\\
+\textbf{H}_1 \text{ (full)}&amp;:
+\mathbf{y = X \beta_\mathcal{F} + \varepsilon},
+\quad
+&amp;&amp; \mathbf{\beta}_\mathcal{F} \in \mathbb{R}^{p \times 1},
+\quad
+&amp;&amp;&amp;\mathbf{\varepsilon \sim \mathcal{N}(0,I_n)}
+\end{align*}
 </span></p>
+<p>Under the null hypothesis the following statistic is F distributed. <span class="math display">
+\dfrac{\| \mathbf{\hat{\varepsilon}_\mathcal{N} - \hat{\varepsilon}_\mathcal{F}} \| /p_1}{\| \mathbf{\hat{\varepsilon}} \|/(n-p)}
+\sim
+F_{p_1, n-p}
+</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>The following picture is helpful:</p>
 </div>
 </section>
 <section id="section" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="section"><span class="header-section-number">3</span> Section</h2>
-<p>Example reference. See <a href="#thm-line" class="quarto-xref">Theorem&nbsp;2</a>.</p>
+<p>Example reference. See <a href="#thm-anova_F_test" class="quarto-xref">Theorem&nbsp;2</a>.</p>
 </section>
 
 </main>
