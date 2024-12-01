@@ -11,7 +11,7 @@ filters:
   - ../../_extensions/pandoc-ext/diagram/diagram.lua
 
 diagram:
-  cache: false
+  cache: true
 ---
 
 ## OLS Basics
@@ -53,10 +53,10 @@ The solution of OLS is given by $\hat{\beta} = \mathbf{(X^TX)^{-1}X^Ty}$.
 
 
 ::: {.proof}
-Let subspace $\mathbf{U} \leq \mathbb{R^n}$ generated via the span of $\mathbf{X}$ columns. Then by property of orthogonal projection the 
-$\mathbf{\hat{y}=X \beta \in U}$
+Let subspace $U \leq \mathbb{R^n}$ generated via the span of $\mathbf{X}$ columns. Then by property of orthogonal projection the 
+$\mathbf{\hat{y}=X \beta} \in U$
 that minimises 
-$\| \hat{\varepsilon} \| = \| \mathbf{y-\hat{y}} \|$ is given by $\mathbf{P_U y}$.
+$\| \hat{\varepsilon} \| = \| \mathbf{y-\hat{y}} \|$ is given by $\mathbf{P}_U \mathbf{y}$.
 
 Therefore,
 $$
@@ -106,18 +106,101 @@ $$
 
 Under the null hypothesis the following statistic is F distributed.
 $$
-\dfrac{\| \mathbf{\hat{\varepsilon}_\mathcal{N} - \hat{\varepsilon}_\mathcal{F}} \| /p_1}{\| \mathbf{\hat{\varepsilon}} \|/(n-p)}
+\dfrac{\| \mathbf{\hat{\varepsilon}_\mathcal{N} - \hat{\varepsilon}_\mathcal{F}} \| /p_1}
+{\| \mathbf{\hat{\varepsilon}_\mathcal{F}} \|/(n-p)}
 \sim
 F_{p_1, n-p}
 $$
 :::
 
-
+<!-- start proof -->
 ::: {.proof}
 The following picture is helpful:
+
+::: {#fig-anova_plot}
+{{< include _anova_plot.qmd >}}
+ANOVA PLot
+
+Visualisation of the geometry of the null and full model.
+:::
+
+Let $U_0, U$ denote the column span of $\mathbf{X_0, X}$ respectively. Since $U_0 \leq U$ the orthogonal compliment of $U_0$ restricted to $U$ is in the direct sum $U = U_0 \oplus U_0^{\perp|_U}$. Also $V = U \oplus U^\perp$. Therefore $V$ is the direct sum of orthogonal subspaces $U_0, U_1, U^\perp$, for $U_1 = U_0^{\perp|_U}$.
+
+Since the components of $\mathbf{\varepsilon}$ are independant w.r.t any normal basis it olds that it holds that projections $\mathbf{P}_{U_0} \varepsilon, \mathbf{P}_{U_1} \varepsilon, \mathbf{P}_{U^\perp} \varepsilon$ are independant because each projection can be expressed in terms of disjoint elements of the orthnormal basis created by combining orthonormal basis of $U_0, U_1, U^\perp$.
+
+We will now show that 
+$\mathbf{\hat{\varepsilon}_\mathcal{N} - \hat{\varepsilon}_\mathcal{F}} = \mathbf{P}_{U_1} \varepsilon$
+and
+$\mathbf{\hat{\varepsilon}_\mathcal{F}} = \mathbf{P}_{U^\perp} \varepsilon$. This implies that they are independant normal and therefore the ratio of their norms divided by their dimension/degrees of freedom is eqivalent to an F distribution and thus completing the proof.
+
+We see,
+
+$\mathbf{y} = \mathbf{P}_U \mathbf{y} + \mathbf{P}_U^\perp \mathbf{y}$
+from directness,
+
+$\mathbf{y} = \mathbf{P}_U \mathbf{y} + \mathbf{\hat{\varepsilon}}_\mathcal{F}$
+from OLS definition and the fact that full fitted 
+$\mathbf{y}$ is given by $\mathbf{P}_U \mathbf{y}$
+
+Hence 
+$\mathbf{\hat{\varepsilon}}_\mathcal{F} = \mathbf{P}_{U^\perp} \mathbf{y}$. Also,
+
+$\mathbf{y} = \mathbf{P}_{U_0} \mathbf{y} + \mathbf{P}_{U_1} \mathbf{y} + \mathbf{P}_{U^\perp} \mathbf{y}$ 
+from directness,
+
+$\mathbf{y} = \mathbf{P}_{U_0} \mathbf{y} + \mathbf{\hat{\varepsilon}}_\mathcal{N}$
+from OLS definition and the fact that null fitted 
+$\mathbf{y}$ is given by $\mathbf{P}_{U_0} \mathbf{y}$
+
+Hence 
+$\mathbf{\hat{\varepsilon}}_\mathcal{N} = \mathbf{P}_{U_1} \mathbf{y} + \mathbf{P}_{U^\perp }\mathbf{y}$.
+Therefore
+$\mathbf{\hat{\varepsilon}}_\mathcal{N} - \mathbf{\hat{\varepsilon}}_\mathcal{F} = \mathbf{P}_{U_1} \mathbf{y}$.
+
+Now under the null hypothesis $\mathbf{y} = \mu_\mathcal{N} + \varepsilon$ for some $\mu_\mathcal{N} \in U_0$, therefore since $U_1, U^\perp$ are orthogonal to $U_0$ it holds that for any
+$W \in \set{U_1, U^\perp} \ \mathbf{P}_W \mathbf{y} = \mathbf{P}_W \mathbf{\varepsilon}$. This gives us what we wanted.
+<!-- end proof -->
 :::
 
 ## Section
+
+### Basic Plot
+
+2d Plot in Tikz
+
+``` {.tikz}
+\begin{tikzpicture}
+ \draw (0,0) circle (1cm);
+ \draw (0,0) circle (2cm);
+\end{tikzpicture}
+```
+
+### Attempt to use 3D package
+
+``` {.tikz
+opt-additional-packages="\usepackage{tikz-3dplot}"}
+\tdplotsetmaincoords{70}{20} % Set 3D view angle
+\begin{tikzpicture}[tdplot_main_coords]
+
+% Axes
+\draw[thick,-stealth] (0,0,0) -- (1,0,0) node[anchor=north east] {$x$};
+\draw[thick,-stealth] (0,0,0) -- (0,1,0) node[right, pos=0.8] {$y$};
+\draw[thick,-stealth] (0,0,0) -- (0,0,1) node[anchor=south] {$z$};
+
+\end{tikzpicture}
+```
+
+### sample ref
+
+``` tikz
+%%| filename: test.tex
+% This should work ok.
+```
+
+### Include External qmd
+{{< include _content.qmd >}}
+
+
 
 Example reference.
 See @thm-anova_F_test.

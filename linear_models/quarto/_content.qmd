@@ -1,0 +1,16 @@
+``` {.tikz
+opt-additional-packages="\usepackage{tikz-3dplot}" 
+width=50%}
+
+
+\tdplotsetmaincoords{70}{20} % Set 3D view angle
+
+\begin{tikzpicture}[tdplot_main_coords]
+
+% Axes
+\draw[thick,-stealth] (0,0,0) -- (1,0,0) node[anchor=north east] {$x$};
+\draw[thick,-stealth] (0,0,0) -- (0,1,0) node[right, pos=0.8] {$y$};
+\draw[thick,-stealth] (0,0,0) -- (0,0,1) node[anchor=south] {$z$};
+
+\end{tikzpicture}
+```
