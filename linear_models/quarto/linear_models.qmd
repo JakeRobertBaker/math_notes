@@ -182,6 +182,8 @@ r(\mathbf{x,y})
 \end{align*}
 $$
 
+Where we are lax with notation and let $\mathbf{1}$ denote $\text{span}\set{\mathbf{1}}$ for 
+$\mathbf{1} = [1,\ ...\ ,1]^T$.
 :::
 
 ## Section
