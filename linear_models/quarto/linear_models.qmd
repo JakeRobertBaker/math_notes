@@ -162,6 +162,28 @@ $W \in \set{U_1, U^\perp} \ \mathbf{P}_W \mathbf{y} = \mathbf{P}_W \mathbf{\vare
 <!-- end proof -->
 :::
 
+## R2 and Sample Correlation
+
+::: {#def-sample_correlation}
+The sample correlation between vectors $\mathbf{x,y}$ is defined as
+
+$$
+\begin{align*}
+r(\mathbf{x,y}) 
+&=
+\cfrac{\sum_i (x_i - \bar{x})(y_i - \bar{y})}{ \sqrt{\sum_i (x_i - \bar{x})^2}  \sqrt{\sum_i (y_i - \bar{y})^2}}
+\\ &=
+\cfrac{(\mathbf{x-P_1 x})^T (\mathbf{y-P_1 y})}{\| \mathbf{x-P_1 x} \| \| \mathbf{y-P_1 y} \|}
+\\ &=
+\bigg\langle
+  \cfrac{\mathbf{P_{1^T} x}}{\|\mathbf{P_{1^T} x}\|},
+  \cfrac{\mathbf{P_{1^T} y}}{\|\mathbf{P_{1^T} y}\|}
+\bigg\rangle
+\end{align*}
+$$
+
+:::
+
 ## Section
 
 ### Basic Plot

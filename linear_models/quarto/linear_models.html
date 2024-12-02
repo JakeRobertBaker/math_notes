@@ -91,12 +91,13 @@ window.Quarto = {
   <ul>
   <li><a href="#ols-basics" id="toc-ols-basics" class="nav-link active" data-scroll-target="#ols-basics"><span class="header-section-number">1</span> OLS Basics</a></li>
   <li><a href="#large-model-vs-submodel" id="toc-large-model-vs-submodel" class="nav-link" data-scroll-target="#large-model-vs-submodel"><span class="header-section-number">2</span> Large Model vs Submodel</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3</span> Section</a>
+  <li><a href="#r2-and-sample-correlation" id="toc-r2-and-sample-correlation" class="nav-link" data-scroll-target="#r2-and-sample-correlation"><span class="header-section-number">3</span> R2 and Sample Correlation</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">4</span> Section</a>
   <ul class="collapse">
-  <li><a href="#basic-plot" id="toc-basic-plot" class="nav-link" data-scroll-target="#basic-plot"><span class="header-section-number">3.1</span> Basic Plot</a></li>
-  <li><a href="#attempt-to-use-3d-package" id="toc-attempt-to-use-3d-package" class="nav-link" data-scroll-target="#attempt-to-use-3d-package"><span class="header-section-number">3.2</span> Attempt to use 3D package</a></li>
-  <li><a href="#sample-ref" id="toc-sample-ref" class="nav-link" data-scroll-target="#sample-ref"><span class="header-section-number">3.3</span> sample ref</a></li>
-  <li><a href="#include-external-qmd" id="toc-include-external-qmd" class="nav-link" data-scroll-target="#include-external-qmd"><span class="header-section-number">3.4</span> Include External qmd</a></li>
+  <li><a href="#basic-plot" id="toc-basic-plot" class="nav-link" data-scroll-target="#basic-plot"><span class="header-section-number">4.1</span> Basic Plot</a></li>
+  <li><a href="#attempt-to-use-3d-package" id="toc-attempt-to-use-3d-package" class="nav-link" data-scroll-target="#attempt-to-use-3d-package"><span class="header-section-number">4.2</span> Attempt to use 3D package</a></li>
+  <li><a href="#sample-ref" id="toc-sample-ref" class="nav-link" data-scroll-target="#sample-ref"><span class="header-section-number">4.3</span> sample ref</a></li>
+  <li><a href="#include-external-qmd" id="toc-include-external-qmd" class="nav-link" data-scroll-target="#include-external-qmd"><span class="header-section-number">4.4</span> Include External qmd</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -234,23 +235,43 @@ Figure&nbsp;1: Visualisation of the geometry of the null and full model.
 <p>Now under the null hypothesis <span class="math inline">\mathbf{y} = \mu_\mathcal{N} + \varepsilon</span> for some <span class="math inline">\mu_\mathcal{N} \in U_0</span>, therefore since <span class="math inline">U_1, U^\perp</span> are orthogonal to <span class="math inline">U_0</span> it holds that for any <span class="math inline">W \in \set{U_1, U^\perp} \ \mathbf{P}_W \mathbf{y} = \mathbf{P}_W \mathbf{\varepsilon}</span>. This gives us what we wanted. <!-- end proof --></p>
 </div>
 </section>
-<section id="section" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="section"><span class="header-section-number">3</span> Section</h2>
-<section id="basic-plot" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="basic-plot"><span class="header-section-number">3.1</span> Basic Plot</h3>
+<section id="r2-and-sample-correlation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="r2-and-sample-correlation"><span class="header-section-number">3</span> R2 and Sample Correlation</h2>
+<div id="def-sample_correlation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3</strong></span> The sample correlation between vectors <span class="math inline">\mathbf{x,y}</span> is defined as</p>
+<p><span class="math display">
+\begin{align*}
+r(\mathbf{x,y})
+&amp;=
+\cfrac{\sum_i (x_i - \bar{x})(y_i - \bar{y})}{ \sqrt{\sum_i (x_i - \bar{x})^2}  \sqrt{\sum_i (y_i - \bar{y})^2}}
+\\ &amp;=
+\cfrac{(\mathbf{x-P_1 x})^T (\mathbf{y-P_1 y})}{\| \mathbf{x-P_1 x} \| \| \mathbf{y-P_1 y} \|}
+\\ &amp;=
+\bigg\langle
+  \cfrac{\mathbf{P_{1^T} x}}{\|\mathbf{P_{1^T} x}\|},
+  \cfrac{\mathbf{P_{1^T} y}}{\|\mathbf{P_{1^T} y}\|}
+\bigg\rangle
+\end{align*}
+</span></p>
+</div>
+</section>
+<section id="section" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="section"><span class="header-section-number">4</span> Section</h2>
+<section id="basic-plot" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="basic-plot"><span class="header-section-number">4.1</span> Basic Plot</h3>
 <p>2d Plot in Tikz</p>
 <img src="linear_models_files/mediabag/fcfa7ff169e24e8e8c8abe2c7383c7c89a8b3494.svg" class="img-fluid">
 </section>
-<section id="attempt-to-use-3d-package" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="attempt-to-use-3d-package"><span class="header-section-number">3.2</span> Attempt to use 3D package</h3>
+<section id="attempt-to-use-3d-package" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="attempt-to-use-3d-package"><span class="header-section-number">4.2</span> Attempt to use 3D package</h3>
 <img src="linear_models_files/mediabag/b35e1c45e8891af6c4f977f71dde37875933f0c9.svg" class="img-fluid">
 </section>
-<section id="sample-ref" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="sample-ref"><span class="header-section-number">3.3</span> sample ref</h3>
+<section id="sample-ref" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sample-ref"><span class="header-section-number">4.3</span> sample ref</h3>
 <img src="linear_models_files/mediabag/test.svg" class="img-fluid">
 </section>
-<section id="include-external-qmd" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="include-external-qmd"><span class="header-section-number">3.4</span> Include External qmd</h3>
+<section id="include-external-qmd" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="include-external-qmd"><span class="header-section-number">4.4</span> Include External qmd</h3>
 <img src="linear_models_files/mediabag/b35e1c45e8891af6c4f977f71dde37875933f0c9.svg" class="img-fluid" style="width:50.0%">
 <p>Example reference. See <a href="#thm-anova_F_test" class="quarto-xref">Theorem&nbsp;2</a>.</p>
 </section>
