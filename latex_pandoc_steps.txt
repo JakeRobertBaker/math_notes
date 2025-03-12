@@ -1,0 +1,6 @@
+sudo dpkg -i pandoc-3.5-1-amd64.deb
+sudo apt-get install texlive
+sudo apt-get install texlive-pictures
+sudo apt-get install texlive-latex-extra
+sudo apt install latexmk
+

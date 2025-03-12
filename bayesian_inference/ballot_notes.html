@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jake Baker">
 
-<title>Linear Model Notes</title>
+<title>Math Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,10 +30,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="ballot_notes_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="ballot_notes_files/libs/quarto-html/anchor.min.js"></script>
 <link href="ballot_notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ballot_notes_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="ballot_notes_files/libs/quarto-html/quarto-syntax-highlighting-f2a1071e85750ec973bbb8a8f120da0f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="ballot_notes_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="ballot_notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ballot_notes_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="ballot_notes_files/libs/bootstrap/bootstrap-7a5af60cc0abb1fbc6e51d1891925bf5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -89,13 +89,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#hypergeometric-distribution" id="toc-hypergeometric-distribution" class="nav-link active" data-scroll-target="#hypergeometric-distribution"><span class="header-section-number">1</span> Hypergeometric Distribution</a></li>
-  <li><a href="#distribution-of-sample-ballots" id="toc-distribution-of-sample-ballots" class="nav-link" data-scroll-target="#distribution-of-sample-ballots"><span class="header-section-number">2</span> Distribution Of Sample Ballots</a></li>
-  <li><a href="#conjugate-prior" id="toc-conjugate-prior" class="nav-link" data-scroll-target="#conjugate-prior"><span class="header-section-number">3</span> Conjugate Prior</a>
-  <ul class="collapse">
-  <li><a href="#beta-binomial-disribution" id="toc-beta-binomial-disribution" class="nav-link" data-scroll-target="#beta-binomial-disribution"><span class="header-section-number">3.1</span> Beta Binomial Disribution</a></li>
-  <li><a href="#posterior." id="toc-posterior." class="nav-link" data-scroll-target="#posterior."><span class="header-section-number">3.2</span> Posterior.</a></li>
-  </ul></li>
+  <li><a href="#beta-binomial" id="toc-beta-binomial" class="nav-link active" data-scroll-target="#beta-binomial"><span class="header-section-number">1</span> Beta Binomial</a></li>
+  <li><a href="#hypergeometric-distribution" id="toc-hypergeometric-distribution" class="nav-link" data-scroll-target="#hypergeometric-distribution"><span class="header-section-number">2</span> Hypergeometric Distribution</a></li>
+  <li><a href="#conjugate-prior" id="toc-conjugate-prior" class="nav-link" data-scroll-target="#conjugate-prior"><span class="header-section-number">3</span> Conjugate Prior</a></li>
   </ul>
 </nav>
 </div>
@@ -105,7 +101,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Linear Model Notes</h1>
+<h1 class="title">Math Notes</h1>
 </div>
 
 
@@ -128,256 +124,73 @@ window.Quarto = {
 </header>
 
 
-<section id="hypergeometric-distribution" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Hypergeometric Distribution</h1>
-<p>Suppose we have <span class="math inline">N</span> items that are either good or bad with <span class="math inline">K=k</span> good ones. Let’s sample <span class="math inline">n</span> items. There are <span class="math inline">k\choose x</span> possible samples with <span class="math inline">x</span> good items. By the multiplication prinnciple:</p>
-<p><span class="math display">
-\begin{align*}
-    \text{[\# ways to sample x good and n-x bad items]} &amp;= \text{[\# ways to sample x good]}
-    \times
-    \text{[\# ways to sample n-x bad items]} \\
-    &amp;= {k \choose x} \times {N-k \choose n-x}
-\end{align*}
+<section id="beta-binomial" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Beta Binomial</h1>
+<div id="def-Beta-Binomial" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1</strong></span> A random variable <span class="math inline">X</span> has a Beta-Binomial distribution, <span class="math inline">X \sim \mathrm{BetaBin} (n,\alpha ,\beta)</span> iff <span class="math display">
+\mathbb{P}(X=x) = f(x|n,\alpha ,\beta) = {n \choose x} \Gamma(x+\alpha) \Gamma(n-x + \beta)
 </span></p>
-<p>Therefore the distribution of <span class="math inline">X</span>, the number of good items in a sample is: <span class="math display">
-\mathbb{P}(X=x) = \frac{{k \choose x} {N-k \choose n-x}}{N \choose n}
-</span></p>
-<p>Note:</p>
-<p>We are assuming, <span class="math inline">K=k</span>. If <span class="math inline">K</span> is an an unknown random variable then the above is <span class="math inline">\mathbb{P}(X=x|K=k)</span>, not <span class="math inline">\mathbb{P}(X=x)</span>.</p>
-<p>Our sample has at most <span class="math inline">\min(n,k)</span> good items and at most <span class="math inline">\min(n,N-k)</span> bad items.</p>
-<p>In other words: <span class="math inline">x \leq \min(n.k)</span> and</p>
-<p><span class="math inline">n-x \leq \min(n, N-k)\iff x \geq n-\min(n, N-k) = n+\max(-n,k-N) = \max(0,n+k-N)</span></p>
+<p>for <span class="math inline">x \in \{1,...,n\}</span>.</p>
+</div>
+<div id="rem-Beta-Binomial-Proportion" class="proof remark">
+<p><span class="proof-title"><em>Remark 1</em>. </span>Note that <span class="math inline">f(x|n,\alpha ,\beta) \propto \frac{1}{x! (n-x)!} \Gamma(x+\alpha) \Gamma(n-x + \beta)</span> when we consider <span class="math inline">x</span> to be the only variable.</p>
+</div>
+<p>This distribution can be derived from a binomial likelihood with a beta distributed prior <span class="math inline">\theta=\mathbb{P}(\text{success})</span>.</p>
 </section>
-<section id="distribution-of-sample-ballots" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Distribution Of Sample Ballots</h1>
-<p>Suppose we have <span class="math inline">N</span> ballots with <span class="math inline">k</span> Labour ballots in grand total where we sample <span class="math inline">n</span> ballots from a mixed box. Therefore the distribution of labour votes in our sample is precisely the Hypogeometric distribution above.</p>
-<p>Now lets <strong>Bayes It Up!</strong> # Distribution of Actual ballots Let us consider where we know <span class="math inline">N</span>, have a size <span class="math inline">n</span> sample with <span class="math inline">x</span> Labour votes, but <span class="math inline">k</span> is unknown. What is the distribution of <span class="math inline">k</span>, the true Labour total?</p>
-<p>Currently we have: <span class="math display">
-\mathbb{P}(x \text{ sample}|k \text{ actual}) =
-\frac{{k \choose x} {N-k \choose n-x}}{N \choose n}
-\stackrel{\text{(via  Vandermonde's identity swapping n and k is legal)}}{=}
-\frac{{n \choose x} {N-n \choose k-x}}{N \choose k}
+<section id="hypergeometric-distribution" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Hypergeometric Distribution</h1>
+<div id="lem-hypergeometric" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> Suppose there are <span class="math inline">N</span> balls, <span class="math inline">X</span> of the balls are red. Suppose we sample <span class="math inline">M</span> balls without replacement. Let <span class="math inline">Y</span> denote the number of red balls in the sample. Then, <span class="math display">
+\mathbb{P}(Y=y) = \frac{{x \choose y} {N-X \choose M-y}}{N \choose M}
 </span></p>
-<p>Now by doing our standard bayes hokus pokus:</p>
-<p><span class="math display">
-\begin{align*}
-    \mathbb{P}(K=k | X=x)  =
-    \mathbb{P}(k \text{ actual} | x \text{ sample})
-    &amp;=
-    \frac
-    {\mathbb{P}(x \text{ sample} | k \text{ actual}) \mathbb{P}(k \text{ actual})}
-    {\mathbb{P}(x\text{ sample})}
-    &amp;=
-    \frac
-    {\mathbb{P}(x \text{ sample} | k \text{ actual}) \mathbb{P}(k \text{ actual})}
-    {\sum_{r=0}^N \mathbb{P}(x \text{ sample} | r \text{ actual}) \mathbb{P}(r \text{ actual})}
-    \\\\
-    &amp;=
-    \frac
-    {{k \choose x} {N-k \choose n-x} \mathbb{P}(k \text{ actual})}
-    {\sum_{r=0}^N {r \choose x} {N-r \choose n-x} \mathbb{P}(r \text{ actual})}
-    &amp;=
-    \frac
-    {\frac{k!}{x!(k-x)!} \frac{(N-k)!}{(n-x)!(N-k -n+x)!} \mathbb{P}(k \text{ actual})}
-    {\sum_{r=0}^N
-    \frac{r!}{x!(r-x)!}
-    \frac{(N-r)!}{(n-x)!(N-r -n+x)!}
-    \mathbb{P}(r \text{ actual})}
-    \\\\
-    &amp;=
-    \frac
-    {\frac{k!}{(k-x)!} \frac{(N-k)!}{(N-k -n+x)!} \mathbb{P}(k \text{ actual})}
-    {\sum_{r=0}^N
-    \frac{r!}{(r-x)!}
-    \frac{(N-r)!}{(N-r -n+x)!}
-    \mathbb{P}(r \text{ actual})}
-\end{align*}
-</span></p>
-<p>If we take logs thenn</p>
-<p><span class="math display">
-\begin{align*}
-    \log \mathbb{P}(k \text{ actual} | x \text{ sample})
-    &amp;=
-    \log \mathbb{P}(x \text{ sample} | k \text{ actual}) +
-    \log \mathbb{P}(k \text{ actual})
-    -
-    \log (
-    \sum_{r=0}^N \mathbb{P}(x \text{ sample} | r \text{ actual}) \mathbb{P}(r \text{ actual})
-    )
-    \\ \\
-\end{align*}
-</span></p>
-<p>If we have a vector that is a scaler multiple of, <span class="math display">
-[
-\mathbb{P}(x \text{ sample} | r \text{ actual}) \mathbb{P}(r \text{ actual})
-]_{r=0}^N
-</span></p>
-<p>then we just need to normalise it to get our posterior.</p>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>As a result of the multiplication principle. The number of combinations that contain y red balls is <span class="math inline">{X \choose y} \times {N-X \choose M-y}</span>.</p>
+</div>
+</div>
 </section>
 <section id="conjugate-prior" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Conjugate Prior</h1>
-<section id="beta-binomial-disribution" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="beta-binomial-disribution"><span class="header-section-number">3.1</span> Beta Binomial Disribution</h2>
-<p>Define the following distribution via pmf supporting <span class="math inline">x \in \set{0,1,...,n}</span></p>
-<p><span class="math display">\begin{align*}
-    f(x|n,\alpha, \beta) &amp;= {n \choose x} \frac{B(x+\alpha, n-x+\beta)}{B(\alpha, \beta)}
-    \\ &amp;=
-    {n \choose x}
-    \frac{\Gamma(x+\alpha) \Gamma(n-x+\beta) \Gamma(\alpha+\beta)}
-    {\Gamma(n+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    \\ &amp;=
-    \frac{\Gamma(n+1)}{\Gamma(x+1) \Gamma(n-x+1)}
-    \frac{\Gamma(x+\alpha) \Gamma(n-x+\beta) \Gamma(\alpha+\beta)}
-    {\Gamma(n+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-\end{align*}
+<div id="thm-hypergeometric-conjugate" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1</strong></span> Suppose there are <span class="math inline">N</span> ballots and we sample <span class="math inline">M \in \{1, ..., N \}</span>. Let the random variable <span class="math inline">X</span> be the total number of Labour ballots. Let <span class="math inline">Y</span> be the number of Labour ballots in the sample.</p>
+<p>If we place the following prior on <span class="math inline">X</span>, <span class="math display">
+p(x) = f(x|N,\alpha ,\beta)
 </span></p>
-<p>This distribution arises from a binomial where <span class="math inline">\mathbb{P}(\text{success})=\theta</span> for beta distributed <span class="math inline">\theta</span>. Hence this is a legal distribution. ## Transform it to define a slightly differnt distribution. If we replace:</p>
-<p><span class="math inline">n</span> with <span class="math inline">N-n</span>, <span class="math inline">x</span> with <span class="math inline">k-x</span>, <span class="math inline">\alpha</span> with <span class="math inline">\alpha + x</span>, <span class="math inline">\beta</span> with <span class="math inline">\beta + n-x</span>,</p>
-<p>We get a pmf that supports <span class="math inline">k-x \in \set{0,1,...,N-n}</span>, equivalent to, <span class="math inline">k \in \set{x,1,...,N-n+x}</span>.</p>
-<p><span class="math display">
+<p>then liklihood of <span class="math inline">Y</span> given <span class="math inline">X</span> is hypergeometric and the posterior distribution of <span class="math inline">X</span> is given by <span class="math display">
+p(x|y) = f(x-y|N-M, \alpha+y, \beta + M-y)
+</span></p>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Notice that if we consider x the only variable, <span class="math display">
 \begin{align*}
-f(k-x|N-n,\alpha + x, \beta +n-x) &amp;=
-{N-n \choose k-x} \frac{B(k-x+\alpha+x, N-n-k+x+\beta+n-x)}{B(\alpha+x, \beta+n-x)}
-\\ &amp;=
-{N-n \choose k-x} \frac{B(k+\alpha, N-k+\beta)}{B(\alpha+x, \beta+n-x)}
-\\ &amp;=
-{N-n \choose k-x} \frac{\Gamma(k+\alpha) \Gamma(N-k+\beta) \Gamma(n+\alpha+\beta)}
-{\Gamma(\alpha+x) \Gamma(\beta+n-x) \Gamma(N+\alpha+\beta)}
-\\ &amp;=
-\Gamma(k+\alpha) \Gamma(N-k+\beta)
-{N-n \choose k-x} \frac{ \Gamma(n+\alpha+\beta)}
-{\Gamma(\alpha+x) \Gamma(\beta+n-x) \Gamma(N+\alpha+\beta)}
+f(\textcolor{green}{x-y} | N-M, \textcolor{blue}{\alpha+y}, \textcolor{red}{\beta + M-y})
+&amp; \propto
+\frac
+{\Gamma(\textcolor{green}{x-y} + \textcolor{blue}{\alpha+y}) \Gamma(N-M \textcolor{green}{-x+y} + \textcolor{red}{\beta + M-y})}
+{(\textcolor{green}{x-y})! (N-M \textcolor{green}{-x+y})!}
+\\ &amp; =
+\frac{\Gamma(x+\alpha) \Gamma(N-x+\beta)}{(x-y)! (N-M-x+y)!} = (*)
 \end{align*}
 </span></p>
-<p>Okay, so all I have done is define a distribution plucked out the air. Now I shalls how that it is in fact the posterior in our ballot sampling!</p>
-<p>Let’s keep a rearangment of above in our backpocket. <span class="math display">
-f(k-x|N-n,\alpha + x, \beta +n-x)
-\frac{\Gamma(\alpha+x) \Gamma(\beta+n-x) \Gamma(N+\alpha+\beta)}
-{ \Gamma(n+\alpha+\beta)}
-=
-\textcolor{teal}{
-    \Gamma(k+\alpha) \Gamma(N-k+\beta)
-    {N-n \choose k-x}
-}
-</span></p>
-</section>
-<section id="posterior." class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="posterior."><span class="header-section-number">3.2</span> Posterior.</h2>
-<p>We want to show that our posterior probability of there being <span class="math inline">k</span> ballots is a constant times the above distribution. This constant must be independant from <span class="math inline">k</span>.</p>
-<p>To do this we put a nice prior on <span class="math inline">K</span>…</p>
-<p><span class="math display">
-\mathbb{P}(K=k) = f(k|N,\alpha, \beta)
-</span></p>
-<p>Then,</p>
-<p><span class="math display">
+<p>The posterior calculation then gives a multiple of this when x is the only variable, <span class="math display">
 \begin{align*}
-    \mathbb{P}(K=k|X=x) =
-    \frac{\mathbb{P}(X=x|K=k) \mathbb{P}(K=k)}
-    {\sum_{r=x}^{N-n+x} \mathbb{P}(X=x|K=r) \mathbb{P}(K=r)}
+p(x|y) \propto p(y|x)p(x)
+&amp; =
+\frac{\textcolor{red}{{x \choose y}} \textcolor{blue}{N-x \choose M-y}}
+{N \choose M}
+{N \choose x}
+\Gamma(x+\alpha) \Gamma(N-x + \beta)
+\\
+&amp; \propto
+\textcolor{red}{\frac{x!}{(x-y!)}} \textcolor{blue}{\frac{(N-x)!}{(N-x-M+y)!}}
+\frac{1}{x! (N-x)!}
+\Gamma(x+\alpha) \Gamma(N-x + \beta)
+\\ &amp;=
+\frac{1}{(x-y)! (N-x-M+y)!}
+\Gamma(x+\alpha) \Gamma(N-x + \beta)
+\\ &amp; = (*) \propto f(x-y|N-M, \alpha+y, \beta + M-y)
 \end{align*}
 </span></p>
-<p>Let’s look at the numerator:</p>
-<p>$$ <span class="math display">\begin{align*}
-    \mathbb{P}(X=x|K=k) \mathbb{P}(K=k)
-    &amp;=
-    {k \choose x} {N-k \choose n-x}  f(k|N,\alpha, \beta)
-    \\ \\
-    &amp;=
-    {k \choose x} {N-k \choose n-x}
-    {N \choose k}
-    \frac{\Gamma(k+\alpha) \Gamma(N-k+\beta) \Gamma(\alpha+\beta)}
-    {\Gamma(N+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    \\
-    \\
-    \Bigg[
-    \text{Recall Vandermonde:}
-    {k \choose x} {N-k \choose n-x}
-    =
-    \frac{{n \choose x} {N-n \choose k-x} {N \choose n}}{N \choose k}
-    \Bigg]
-    &amp;=
-    \frac{{n \choose x} {N-n \choose k-x} {N \choose n}}{N \choose k}
-    {N \choose k}
-    \frac{\Gamma(k+\alpha) \Gamma(N-k+\beta) \Gamma(\alpha+\beta)}
-    {\Gamma(N+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    \\
-    &amp;=
-    {n \choose x} {N-n \choose k-x} {N \choose n}
-    \frac{\Gamma(k+\alpha) \Gamma(N-k+\beta) \Gamma(\alpha+\beta)}
-    {\Gamma(N+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    \\ &amp;=
-    \textcolor{teal}{
-        \Gamma(k+\alpha) \Gamma(N-k+\beta)
-        {N-n \choose k-x}
-    }
-    
-    {n \choose x} {N \choose n}
-    \frac{ \Gamma(\alpha+\beta)}
-    {\Gamma(N+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    \\ &amp;=
-    f(k-x|N-n,\alpha + x, \beta +n-x)
-    \frac{\Gamma(\alpha+x) \Gamma(\beta+n-x) \Gamma(N+\alpha+\beta)}
-    {\Gamma(n+\alpha+\beta)}
-    {n \choose x} {N \choose n}
-    \frac{ \Gamma(\alpha+\beta)}
-    {\Gamma(N+\alpha+\beta) \Gamma(\alpha) \Gamma(\beta)}
-    
-    \\ &amp;=
-    f(k-x|N-n,\alpha + x, \beta +n-x)
-    \textcolor{pink}{
-        \frac{\Gamma(\alpha+x) \Gamma(\beta+n-x) }
-        {\Gamma(n+\alpha+\beta)}
-        {n \choose x} {N \choose n}
-        \frac{ \Gamma(\alpha+\beta)}
-        {\Gamma(\alpha) \Gamma(\beta)}
-    }
-    
-    \\
-    \\
-    \mathbb{P}(X=x|K=k) \mathbb{P}(K=k) &amp;=
-    f(k-x|N-n,\alpha + x, \beta +n-x)
-    \textcolor{pink}{c(N,n,x,\alpha,\beta)}
-\end{align*}</span> $$</p>
-<p>This is enough to show that our prior distribution is <span class="math inline">f(k-x|N-n,\alpha + x, \beta +n-x)</span></p>
-<p>More explicitly:</p>
-<p><span class="math display">
-\begin{align*}
-    \mathbb{P}(K=k|X=x)
-    &amp;=
-    \frac{\mathbb{P}(X=x|K=k) \mathbb{P}(K=k)}
-    {\sum_{r=x}^{N-n+x} \mathbb{P}(X=x|K=r) \mathbb{P}(K=r)}
-    \\
-    \\
-    &amp;=
-    \frac{
-        f(k-x|N-n,\alpha + x, \beta +n-x)
-        \textcolor{pink}{c(N,n,x,\alpha,\beta)}}
-    {
-        \sum_{r=x}^{N-n+x} f(r-x|N-n,\alpha + x, \beta +n-x)
-        \textcolor{pink}{c(N,n,x,\alpha,\beta)}
-        }
-    \\
-    \\
-    &amp;=
-    \frac{
-        f(k-x|N-n,\alpha + x, \beta +n-x)
-        \textcolor{pink}{c(N,n,x,\alpha,\beta)}}
-    {
-        \textcolor{pink}{c(N,n,x,\alpha,\beta)}
-        \sum_{r=x}^{N-n+x} f(r-x|N-n,\alpha + x, \beta +n-x)
-        }
-    \\
-    \\
-    &amp;=
-    \frac{f(k-x|N-n,\alpha + x, \beta +n-x)}
-    {\sum_{r=x}^{N-n+x} f(r-x|N-n,\alpha + x, \beta +n-x)}
-    \\
-    \\
-    &amp;=
-    f(k-x|N-n,\alpha + x, \beta +n-x)
-\end{align*}
-</span></p>
-</section>
+</div>
+</div>
 </section>
 
 </main>
@@ -464,8 +277,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -576,7 +387,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
