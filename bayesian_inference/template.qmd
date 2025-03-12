@@ -1,0 +1,76 @@
+---
+title: "Linear Model Notes"
+author: "Jake Baker"
+toc: true
+toc-location: left
+number-sections: true
+highlight-style: pygments
+format: 
+  html: 
+    html-math-method: katex
+
+diagram:
+  cache: true
+---
+
+## OLS Basics
+
+::: {#def-standard_normal}
+A random vector $\mathbf{z} \in \mathbb{R^n}$ is standard normal **iff** components 
+$(\mathbf{z_i})_{i=1}^n$
+are independantly identically distributed $\mathcal{N}(\mathbf{0,I_n})$.
+:::
+
+::: {.callout-note}
+If a vector in standard normal w.r.t one basis then it is standard normal w.r.t any basis.
+:::
+
+::: {#def-ols_lm}
+## OLS
+An ordinary least squares linear model (OLM) provides an estimate $\hat{\beta}$ of unknown coefficent $\beta \in \mathbb{R^{p \times 1}}$ to the problem,
+
+$$
+\mathbf{y} = \mathbf{X} \beta + \mathbf{\varepsilon}
+$$
+
+that minimises $\| \hat{\varepsilon} \|$ for $\hat{\varepsilon} = \mathbf{y-X \hat{\beta}}$.
+
+Items $\mathbf{y} \in \mathbb{R}^{n \times 1}, \mathbf{X} \in \mathbb{R^{n \times p}}$ are known.
+
+We **assume** that $\dfrac{\varepsilon}{\sigma}$ is
+standard normal (@def-standard_normal)
+$\Leftrightarrow \varepsilon \sim \mathcal{N}(\mathbf{0, \sigma^2 I_n})$,
+where we may not know $\sigma$.
+:::
+
+::: {#thm-ols_solution}
+## Solution of OLS
+Assume that $\mathbf{X}$ has full rank.
+
+The solution of OLS is given by $\hat{\beta} = \mathbf{(X^TX)^{-1}X^Ty}$.
+:::
+
+
+::: {.proof}
+Let subspace $U \leq \mathbb{R^n}$ generated via the span of $\mathbf{X}$ columns. Then by property of orthogonal projection the 
+$\mathbf{\hat{y}=X \beta} \in U$
+that minimises 
+$\| \hat{\varepsilon} \| = \| \mathbf{y-\hat{y}} \|$ is given by $\mathbf{P}_U \mathbf{y}$.
+
+Therefore,
+$$
+\begin{align*}
+\forall u \in U,
+\langle u, \hat{\varepsilon}\rangle =0 &\implies \mathbf{(y-X \hat{\beta})^TX} = 0
+\\
+&\Leftrightarrow
+\mathbf{y^T X} = \mathbf{\hat{\beta}^T X^TX}
+\\
+&\Leftrightarrow
+\mathbf{X^Ty} = \mathbf{X^T X \hat{\beta}}
+\\
+&\Leftrightarrow
+\mathbf{\hat{\beta}} = \mathbf{(X^TX)^{-1}X^Ty}
+\end{align*}
+$$
+:::
